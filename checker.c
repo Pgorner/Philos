@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:48:24 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 18:00:02 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 19:48:48 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,19 @@ void	checker(t_v *v)
 	}
 	pthread_mutex_lock(&v->num.print);
 	usleep(3000);
-	if (i == 0)
-		i = 1;
-	kill_threads(v, i);
+	if (v->philos[i].n_ate != v->num.n_eat)
+		kill_threads(v, i);
 }
 
 void	kill_threads(t_v *v, int i)
 {
-	printf("%lli %i %s\n", currentms(&v->philos[i]), i, D);
+	int	l;
+
+	if (i == 0)
+		l = 1;
+	else
+		l = i;
+	printf("%lli %i %s\n", currentms(&v->philos[i]), l, D);
 	i = -1;
 	while (++i < v->num.n_philo)
 		v->philos[i].life = FALSE;
