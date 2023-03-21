@@ -9,15 +9,15 @@
 NAME = philo
 
 CC		 = cc
-CFLAGS   = -Wall -Werror -Wextra
+CFLAGS   = -g -Wall -Werror -Wextra
 AR		 = ar rcs
 RM		 = rm -rf
 
-.SILENT:
-			printf
-			clean
-			all
-			$(NAME)
+#.SILENT:
+#			printf
+#			clean
+#			all
+#			$(NAME)
 
 SRC =		action.c		\
 			checker.c		\

@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:50:07 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 15:15:24 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:18:24 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_num
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	eattime;
 	pthread_mutex_t	start;
+	pthread_mutex_t	sleep;
 }	t_n;
 
 typedef struct s_phil
