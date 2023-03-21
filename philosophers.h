@@ -6,12 +6,24 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:50:07 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/20 17:50:39 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 15:15:24 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+# define SEC_PER_DAY 86400
+# define SEC_PER_HOUR 3600
+# define SEC_PER_MIN 60
+# define TRUE 1
+# define FALSE 0
+# define RF 0
+# define LF 1
+# define E "is eating"
+# define S "is sleeping"
+# define T "is thinking"
+# define F "has taken a fork"
+# define D "died"
 
 # include <sys/time.h>
 # include <unistd.h>
@@ -21,72 +33,84 @@
 # include <pthread.h>
 # include <stdarg.h>
 
-#define SEC_PER_DAY		86400
-#define SEC_PER_HOUR	3600
-#define SEC_PER_MIN		60
-#define TRUE 1
-#define FALSE 0
-#define RF 0
-#define LF 1
-#define P "PHILO"
-#define E "IS EATING"
-#define S "IS SLEEPING"
-#define T "IS THINKING"
-#define F "HAS TAKEN PHORKS"
-#define D "IS DED"
-
-typedef struct num
+typedef struct s_num
 {
-	long long int	s_t;
-	int				t_eat;
-	int				n_eat;
-	int				num;
 	int				n_philo;
 	int				t_death;
+	int				t_eat;
 	int				t_sleep;
+	int				n_eat;
+	long long int	s_t;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
-} t_n;
+	pthread_mutex_t	eattime;
+	pthread_mutex_t	start;
+}	t_n;
 
-typedef struct phil
+typedef struct s_phil
 {
 	t_n				num;
 	int				me;
-	int				t_ate;
+	long long int	t_ate;
 	int				n_ate;
 	int				fork[2];
 	int				life;
 	pthread_t		philo;
 }	t_p;
 
-typedef struct val
+typedef struct s_val
 {
 	t_n				num;
 	t_p				*philos;
 	pthread_t		checker;
 }	t_v;
 
-
+//==============================================================================
+//---------------------------------ACTION.c-------------------------------------
+//==============================================================================
+void	eating(t_p *p);
+void	sleeping(t_p *p);
+void	thinking(t_p *p);
+//==============================================================================
+//---------------------------------CHECKER.c------------------------------------
+//==============================================================================
+void	checker(t_v *v);
+void	kill_threads(t_v *v, int i);
+//==============================================================================
+//----------------------------------INIT.c--------------------------------------
+//==============================================================================
+void	init_philo(t_v *v);
+void	init_phork(t_v *v);
+//==============================================================================
+//----------------------------------INPUT.c-------------------------------------
+//==============================================================================
+void	ft_exit(char *c, int exc);
+int		check_args(char *str);
+void	set_v(t_p *p, t_v *v, int i);
+void	values(int argc, char **argv, t_v *v);
 //==============================================================================
 //----------------------------------MAIN.c--------------------------------------
 //==============================================================================
-
-
+int		main(int argc, char **argv);
+void	existence(void *args);
+void	infinity(void *args);
+void	join_philo(t_v *v);
 //==============================================================================
 //----------------------------------TIME.c--------------------------------------
 //==============================================================================
-void		calctime(void);
-long		ms();
+long	ms(void);
+long long int	currentms(t_p *p);
 //==============================================================================
-//-------------------------------UTILS_MAIN.c-----------------------------------
+//---------------------------------UTILS.c--------------------------------------
 //==============================================================================
-void		values(int argc, char **argv, t_v *v);
-int			check_args(char *str);
-void		ft_exit(char *c, int exc);
-//==============================================================================
-//-------------------------------CONVERSION.c-----------------------------------
-//==============================================================================
-long		atol(const char *str);
-void		existence(void *args);
+void	*set_calloc(size_t count, size_t size);
+void	values(int argc, char **argv, t_v *v);
+void	ft_exit(char *c, int exc);
+void	pzero(void *s, size_t n);
+int		check_args(char *str);
+void	sleep_diff(int time);
+
+
+
 
 #endif

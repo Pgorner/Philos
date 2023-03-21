@@ -6,7 +6,7 @@
 #	██║ ╚═╝ ██║██║  ██║██║  ██╗███████╗██║     ██║███████╗███████╗
 #	╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚══════╝╚══════╝
 
-NAME = philosophers
+NAME = philo
 
 CC		 = cc
 CFLAGS   = -Wall -Werror -Wextra
@@ -19,10 +19,14 @@ RM		 = rm -rf
 			all
 			$(NAME)
 
-SRC =		main.c			\
-			time.c			\
+SRC =		action.c		\
+			checker.c		\
+			init.c			\
 			input.c			\
-			conversion.c
+			main.c			\
+			time.c			\
+			utils.c			\
+		
 
 OBJS =		$(SRC:.c=.o)
 
