@@ -6,11 +6,11 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:28:35 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 13:54:21 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:57:34 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 long	atol(const char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:28:00 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 16:37:02 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:58:01 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 void	ft_exit(char *c, int exc)
 {
@@ -40,7 +40,7 @@ void	set_v(t_p *p, t_v *v, int i)
 {
 	p->t_ate = 0;
 	p->me = i + 1;
-	/* p->philo = NULL; */
+	p->philo = NULL;
 	p->num = v->num;
 	p->fork[0] = i;
 	p->life = TRUE;

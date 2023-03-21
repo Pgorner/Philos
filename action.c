@@ -6,11 +6,11 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:47:13 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 16:40:40 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:57:14 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 void	eating(t_p *p)
 {
@@ -24,11 +24,11 @@ void	eating(t_p *p)
 		printf("%lli %i %s\n", ms() - p->num.s_t, p->me, E);
 		pthread_mutex_unlock(&p->num.print);
 	}
+	pthread_mutex_unlock(&p->num.forks[p->fork[LF]]);
+	pthread_mutex_unlock(&p->num.forks[p->fork[RF]]);
 	p->t_ate = ms() - p->num.s_t;
 	p->n_ate++;
 	sleep_diff(p->num.t_eat);
-	pthread_mutex_unlock(&p->num.forks[p->fork[LF]]);
-	pthread_mutex_unlock(&p->num.forks[p->fork[RF]]);
 }
 
 void	sleeping(t_p *p)

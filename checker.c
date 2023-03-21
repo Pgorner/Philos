@@ -6,15 +6,15 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:48:24 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 16:56:39 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 18:00:02 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 void	checker(t_v *v)
 {
-	int			i;
+	int				i;
 	long long int	eattime;
 
 	i = 0;
@@ -37,18 +37,9 @@ void	checker(t_v *v)
 
 void	kill_threads(t_v *v, int i)
 {
-	long long int ct = currentms(&v->philos[i]);
-	printf("%lli %i %s\n", ct, i, D);
+	printf("%lli %i %s\n", currentms(&v->philos[i]), i, D);
 	i = -1;
 	while (++i < v->num.n_philo)
 		v->philos[i].life = FALSE;
-	i = -1;
-	while (++i < v->num.n_philo)
-		pthread_mutex_destroy(&v->num.forks[i]);
-	i = -1;
-	while (++i < v->num.n_philo)
-		pthread_detach(v->philos[i].philo);
-	pthread_mutex_destroy(&v->num.print);
-	pthread_mutex_destroy(&v->num.eattime);
-	pthread_mutex_destroy(&v->num.start);
+	pthread_mutex_unlock(&v->num.print);
 }

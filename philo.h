@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:50:07 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 16:18:24 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:58:59 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <stdarg.h>
+# include <stdint.h>
 
 typedef struct s_num
 {
@@ -69,49 +70,46 @@ typedef struct s_val
 //==============================================================================
 //---------------------------------ACTION.c-------------------------------------
 //==============================================================================
-void	eating(t_p *p);
-void	sleeping(t_p *p);
-void	thinking(t_p *p);
+void			eating(t_p *p);
+void			sleeping(t_p *p);
+void			thinking(t_p *p);
 //==============================================================================
 //---------------------------------CHECKER.c------------------------------------
 //==============================================================================
-void	checker(t_v *v);
-void	kill_threads(t_v *v, int i);
+void			checker(t_v *v);
+void			kill_threads(t_v *v, int i);
 //==============================================================================
 //----------------------------------INIT.c--------------------------------------
 //==============================================================================
-void	init_philo(t_v *v);
-void	init_phork(t_v *v);
+void			init_philo(t_v *v);
+void			init_phork(t_v *v);
 //==============================================================================
 //----------------------------------INPUT.c-------------------------------------
 //==============================================================================
-void	ft_exit(char *c, int exc);
-int		check_args(char *str);
-void	set_v(t_p *p, t_v *v, int i);
-void	values(int argc, char **argv, t_v *v);
+void			ft_exit(char *c, int exc);
+int				check_args(char *str);
+void			set_v(t_p *p, t_v *v, int i);
+void			values(int argc, char **argv, t_v *v);
 //==============================================================================
 //----------------------------------MAIN.c--------------------------------------
 //==============================================================================
-int		main(int argc, char **argv);
-void	existence(void *args);
-void	infinity(void *args);
-void	join_philo(t_v *v);
+int				main(int argc, char **argv);
+void			existence(void *args);
+void			infinity(void *args);
+void			join_philo(t_v *v);
 //==============================================================================
 //----------------------------------TIME.c--------------------------------------
 //==============================================================================
-long	ms(void);
+long			ms(void);
 long long int	currentms(t_p *p);
 //==============================================================================
 //---------------------------------UTILS.c--------------------------------------
 //==============================================================================
-void	*set_calloc(size_t count, size_t size);
-void	values(int argc, char **argv, t_v *v);
-void	ft_exit(char *c, int exc);
-void	pzero(void *s, size_t n);
-int		check_args(char *str);
-void	sleep_diff(int time);
-
-
-
+void			*set_calloc(size_t count, size_t size);
+void			values(int argc, char **argv, t_v *v);
+void			ft_exit(char *c, int exc);
+void			pzero(void *s, size_t n);
+int				check_args(char *str);
+void			sleep_diff(int time);
 
 #endif

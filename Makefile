@@ -9,7 +9,7 @@
 NAME = philo
 
 CC		 = cc
-CFLAGS   = -g -Wall -Werror -Wextra
+CFLAGS   = -g -Wall -Werror -Wextra -pthread
 AR		 = ar rcs
 RM		 = rm -rf
 

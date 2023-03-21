@@ -6,11 +6,11 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:37 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 16:23:19 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:57:19 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 void	init_philo(t_v *v)
 {
@@ -36,7 +36,7 @@ void	init_phork(t_v *v)
 	int	i;
 
 	i = 0;
-	v->num.forks = set_calloc(sizeof(pthread_mutex_t), v->num.n_philo + 1);
+	v->num.forks = set_calloc(sizeof(pthread_mutex_t), v->num.n_philo);
 	while (i < v->num.n_philo)
 		pthread_mutex_init(&v->num.forks[i++], NULL);
 	pthread_mutex_init(&v->num.print, NULL);

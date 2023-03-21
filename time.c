@@ -6,11 +6,11 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:25:38 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 15:56:05 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:59:21 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philo.h"
 
 long	ms(void)
 {
@@ -26,8 +26,9 @@ long	ms(void)
 long long int	currentms(t_p *p)
 {
 	long long int	ret;
+
 	pthread_mutex_lock(&p->num.start);
 	ret = ms() - p->num.s_t;
 	pthread_mutex_unlock(&p->num.start);
-	return(ret);
+	return (ret);
 }
