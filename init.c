@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:46:37 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 17:57:19 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/22 13:23:01 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,4 @@ void	init_phork(t_v *v)
 	pthread_mutex_init(&v->num.print, NULL);
 	pthread_mutex_init(&v->num.start, NULL);
 	pthread_mutex_init(&v->num.sleep, NULL);
-	pthread_mutex_init(&v->num.eattime, NULL);
 }

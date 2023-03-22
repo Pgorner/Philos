@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:28:00 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 17:58:01 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:26:40 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	set_v(t_p *p, t_v *v, int i)
 {
 	p->t_ate = 0;
 	p->me = i + 1;
-	p->philo = NULL;
 	p->num = v->num;
-	p->fork[0] = i;
+	p->forkrf = i;
 	p->life = TRUE;
+	pthread_mutex_init(&p->eattime, NULL);
 	if (i < v->num.n_philo - 1)
-		p->fork[1] = i + 1;
+		p->forklf = i + 1;
 	if (i == v->num.n_philo - 1)
-		p->fork[1] = 0;
+		p->forklf = 0;
 }
 
 void	values(int argc, char **argv, t_v *v)
@@ -57,7 +57,7 @@ void	values(int argc, char **argv, t_v *v)
 	i = 0;
 	while (++i < argc)
 		if (check_args(argv[i]) == FALSE)
-			ft_exit("False Input at Arg\n", 2);
+			ft_exit("False input at args", 2);
 	v->num.n_philo = atol(argv[1]);
 	v->num.t_death = atol(argv[2]);
 	v->num.t_eat = atol(argv[3]);

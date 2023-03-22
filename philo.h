@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:50:07 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 17:58:59 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:05:09 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_num
 	long long int	s_t;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	eattime;
 	pthread_mutex_t	start;
 	pthread_mutex_t	sleep;
 }	t_n;
@@ -55,8 +54,10 @@ typedef struct s_phil
 	int				me;
 	long long int	t_ate;
 	int				n_ate;
-	int				fork[2];
+	int				forklf;
+	int				forkrf;
 	int				life;
+	pthread_mutex_t	eattime;
 	pthread_t		philo;
 }	t_p;
 

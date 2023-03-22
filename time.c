@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:25:38 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 17:59:21 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/22 11:05:20 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ long long int	currentms(t_p *p)
 	long long int	ret;
 
 	pthread_mutex_lock(&p->num.start);
+	if (p->num.s_t == 0)
+		p->num.s_t = ms();
 	ret = ms() - p->num.s_t;
 	pthread_mutex_unlock(&p->num.start);
 	return (ret);
