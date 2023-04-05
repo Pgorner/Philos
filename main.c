@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:47:27 by pgorner           #+#    #+#             */
-/*   Updated: 2023/04/05 15:23:49 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:03:00 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	self_aware(t_p *p)
 {
-	pthread_mutex_lock(&p->eattime);
-	if ((currentms(p) - p->t_ate) > p->death || p->num.life == FALSE)
+	pthread_mutex_lock(&p->num->eattime);
+	if ((currentms(p) - p->t_ate) > p->death || p->num->life == FALSE)
 	{
-		p->num.life = FALSE;
-		pthread_mutex_unlock(&p->eattime);
+		p->num->life = FALSE;
+		pthread_mutex_unlock(&p->num->eattime);
 		return (FALSE);
 	}
 	else
-		pthread_mutex_unlock(&p->eattime);
+		pthread_mutex_unlock(&p->num->eattime);
 	return (TRUE);
 }
 
@@ -33,7 +33,7 @@ void	existence(void *args)
 	p = (t_p *)args;
 	if (p->me % 2)
 		usleep(1500);
-	while (p->n_ate < p->num.n_eat)
+	while (p->n_ate < p->num->n_eat)
 	{
 		if (self_aware(p))
 			eating(p);
@@ -43,7 +43,7 @@ void	existence(void *args)
 			thinking(p);
 	}
 	usleep(300);
-	pthread_mutex_destroy(&p->num.forks[p->me]);
+	pthread_mutex_destroy(&p->num->forks[p->me]);
 }
 
 void	infinity(void *args)
@@ -68,26 +68,28 @@ void	end(t_v *v)
 {
 	int	i;
 
-	pthread_mutex_destroy(&v->num.start);
-	pthread_mutex_destroy(&v->num.sleep);
-	pthread_mutex_destroy(&v->num.print);
+	pthread_mutex_destroy(&v->num->sleep);
+	pthread_mutex_destroy(&v->num->print);
 	i = 0;
-	while (i < v->num.n_philo)
+	while (i < v->num->n_philo)
 		pthread_detach(v->philos[i++].philo);
 	free(v->philos);
-	free(v->num.forks);
+	free(v->num->forks);
 }
 
 int	main(int argc, char **argv)
 {
 	t_v	v;
+	t_n	num;
 
 	if (argc == 5 || argc == 6)
-		values(argc, argv, &v);
+	{
+		values(argc, argv, &num);
+	}
 	else
 		ft_exit("Too few/many input", 127);
-	init_phork(&v);
-	init_philo(&v);
+	v.num = &num;
+	init_philo(&v, &num);
 	pthread_create(&v.checker, NULL, (void *)checker, (void *)&v);
 	pthread_join(v.checker, NULL);
 	end(&v);

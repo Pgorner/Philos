@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:50:07 by pgorner           #+#    #+#             */
-/*   Updated: 2023/04/05 15:23:22 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:02:04 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ typedef struct s_num
 	long long int	s_t;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	start;
 	pthread_mutex_t	sleep;
+	pthread_mutex_t	eattime;
 }	t_n;
 
 typedef struct s_phil
 {
-	t_n				num;
+	t_n				*num;
 	int				me;
 	long long int	t_ate;
 	int				n_ate;
@@ -59,13 +59,12 @@ typedef struct s_phil
 	int				forkrf;
 	int				life;
 	int				death;
-	pthread_mutex_t	eattime;
 	pthread_t		philo;
 }	t_p;
 
 typedef struct s_val
 {
-	t_n				num;
+	t_n				*num;
 	t_p				*philos;
 	pthread_t		checker;
 }	t_v;
@@ -84,15 +83,15 @@ void			kill_threads(t_v *v, int i);
 //==============================================================================
 //----------------------------------INIT.c--------------------------------------
 //==============================================================================
-void			init_philo(t_v *v);
+void			init_philo(t_v *v, t_n *num);
 void			init_phork(t_v *v);
 //==============================================================================
 //----------------------------------INPUT.c-------------------------------------
 //==============================================================================
 void			ft_exit(char *c, int exc);
 int				check_args(char *str);
-void			set_v(t_p *p, t_v *v, int i);
-void			values(int argc, char **argv, t_v *v);
+void			set_v(t_p *p, t_n *num, int i);
+void			values(int argc, char **argv, t_n *num);
 //==============================================================================
 //----------------------------------MAIN.c--------------------------------------
 //==============================================================================
@@ -110,7 +109,6 @@ long long int	currentms(t_p *p);
 //---------------------------------UTILS.c--------------------------------------
 //==============================================================================
 void			*set_calloc(size_t count, size_t size);
-void			values(int argc, char **argv, t_v *v);
 void			ft_exit(char *c, int exc);
 void			pzero(void *s, size_t n);
 int				check_args(char *str);

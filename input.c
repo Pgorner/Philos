@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:28:00 by pgorner           #+#    #+#             */
-/*   Updated: 2023/04/05 15:23:44 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:02:20 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,21 @@ int	check_args(char *str)
 	return (TRUE);
 }
 
-void	set_v(t_p *p, t_v *v, int i)
+void	set_v(t_p *p, t_n *num, int i)
 {
-	p->t_ate = currentms(p);
 	p->me = i + 1;
-	p->num = v->num;
 	p->forkrf = i;
 	p->life = TRUE;
-	p->death = v->num.t_death;
-	pthread_mutex_init(&p->eattime, NULL);
-	if (i < v->num.n_philo - 1)
+	p->num = num;
+	p->death = num->t_death;
+	if (i < num->n_philo - 1)
 		p->forklf = i + 1;
-	if (i == v->num.n_philo - 1)
+	if (i == num->n_philo - 1)
 		p->forklf = 0;
+	p->t_ate = currentms(p);
 }
 
-void	values(int argc, char **argv, t_v *v)
+void	values(int argc, char **argv, t_n *num)
 {
 	int	i;
 
@@ -59,14 +58,21 @@ void	values(int argc, char **argv, t_v *v)
 	while (++i < argc)
 		if (check_args(argv[i]) == FALSE)
 			ft_exit("False input at args", 2);
-	v->num.n_philo = atol(argv[1]);
-	v->num.t_death = atol(argv[2]);
-	v->num.t_eat = atol(argv[3]);
-	v->num.t_sleep = atol(argv[4]);
+	num->n_philo = atol(argv[1]);
+	num->forks = set_calloc(sizeof(pthread_mutex_t), num->n_philo);
+	num->t_death = atol(argv[2]);
+	num->t_eat = atol(argv[3]);
+	num->t_sleep = atol(argv[4]);
 	if (argc == 6)
-		v->num.n_eat = atol(argv[5]);
+		num->n_eat = atol(argv[5]);
 	else
-		v->num.n_eat = -1;
-	v->num.s_t = ms();
-	v->num.life = TRUE;
+		num->n_eat = -1;
+	i = 0;
+	while (i < num->n_philo)
+		pthread_mutex_init(&num->forks[i++], NULL);
+	pthread_mutex_init(&num->print, NULL);
+	pthread_mutex_init(&num->sleep, NULL);
+	pthread_mutex_init(&num->eattime, NULL);
+	num->s_t = ms();
+	num->life = TRUE;
 }
