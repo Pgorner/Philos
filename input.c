@@ -6,16 +6,15 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:28:00 by pgorner           #+#    #+#             */
-/*   Updated: 2023/04/05 17:02:20 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:09:10 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_exit(char *c, int exc)
+void	ft_exit(char *c)
 {
 	printf("%s\n", c);
-	exit(exc);
 }
 
 int	check_args(char *str)
@@ -50,14 +49,17 @@ void	set_v(t_p *p, t_n *num, int i)
 	p->t_ate = currentms(p);
 }
 
-void	values(int argc, char **argv, t_n *num)
+int	values(int argc, char **argv, t_n *num)
 {
 	int	i;
 
 	i = 0;
 	while (++i < argc)
 		if (check_args(argv[i]) == FALSE)
-			ft_exit("False input at args", 2);
+		{
+			ft_exit("False input at args");
+			return (-1);
+		}
 	num->n_philo = atol(argv[1]);
 	num->forks = set_calloc(sizeof(pthread_mutex_t), num->n_philo);
 	num->t_death = atol(argv[2]);
@@ -75,4 +77,5 @@ void	values(int argc, char **argv, t_n *num)
 	pthread_mutex_init(&num->eattime, NULL);
 	num->s_t = ms();
 	num->life = TRUE;
+	return (0);
 }

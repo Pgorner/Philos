@@ -6,7 +6,7 @@
 #    By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/22 18:22:21 by pgorner           #+#    #+#              #
-#    Updated: 2023/03/22 18:31:55 by pgorner          ###   ########.fr        #
+#    Updated: 2023/04/05 17:14:56 by pgorner          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@
 NAME = philo
 
 CC		 = cc
-CFLAGS   = -g -Wall -Werror -Wextra -pthread #-fsanitize=thread
+CFLAGS   = -g -Wall -Werror -Wextra -pthread -fsanitize=thread
 AR		 = ar rcs
 RM		 = rm -rf
 
