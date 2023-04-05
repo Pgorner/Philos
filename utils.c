@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:28:35 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/21 17:57:34 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/03/22 18:14:28 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ void	*set_calloc(size_t count, size_t size)
 	return (memory);
 }
 
-void	sleep_diff(int time)
+void	sleep_diff(t_p *p, int time)
 {
 	long long int	i;
 
 	i = ms();
-	while (ms() - i < time)
+	while (ms() - i < time && self_aware(p))
 		usleep(50);
 }

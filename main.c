@@ -6,38 +6,44 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:47:27 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/22 14:26:51 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/04/05 15:23:49 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	self_aware(t_p *p)
+{
+	pthread_mutex_lock(&p->eattime);
+	if ((currentms(p) - p->t_ate) > p->death || p->num.life == FALSE)
+	{
+		p->num.life = FALSE;
+		pthread_mutex_unlock(&p->eattime);
+		return (FALSE);
+	}
+	else
+		pthread_mutex_unlock(&p->eattime);
+	return (TRUE);
+}
+
 void	existence(void *args)
 {
-	int	ate;
-	int	eat;
-	int	life;
 	t_p	*p;
 
 	p = (t_p *)args;
-	eat = p->num.n_eat;
-	ate = 0;
-	life = TRUE;
 	if (p->me % 2)
 		usleep(1500);
-	while (ate < eat && life == TRUE)
+	while (p->n_ate < p->num.n_eat)
 	{
-		if (p->life == TRUE)
+		if (self_aware(p))
 			eating(p);
-		if (p->life == TRUE)
+		if (self_aware(p))
 			sleeping(p);
-		if (p->life == TRUE)
+		if (self_aware(p))
 			thinking(p);
-		pthread_mutex_lock(&p->eattime);
-		if (currentms(p) - p->t_ate > p->num.t_death)
-		life = FALSE;
-		pthread_mutex_unlock(&p->eattime);
 	}
+	usleep(300);
+	pthread_mutex_destroy(&p->num.forks[p->me]);
 }
 
 void	infinity(void *args)
@@ -47,13 +53,13 @@ void	infinity(void *args)
 	p = (t_p *)args;
 	if (p->me % 2)
 		usleep(1500);
-	while (TRUE && p->life == TRUE)
+	while (self_aware(p))
 	{
-		if (p->life == TRUE)
+		if (self_aware(p))
 			eating(p);
-		if (p->life == TRUE)
+		if (self_aware(p))
 			sleeping(p);
-		if (p->life == TRUE)
+		if (self_aware(p))
 			thinking(p);
 	}
 }
@@ -62,15 +68,12 @@ void	end(t_v *v)
 {
 	int	i;
 
-	i = 0;
-	while (i < v->num.n_philo)
-	{
-		pthread_mutex_destroy(&v->num.forks[i]);
-		pthread_detach(v->philos[i++].philo);
-	}
 	pthread_mutex_destroy(&v->num.start);
 	pthread_mutex_destroy(&v->num.sleep);
 	pthread_mutex_destroy(&v->num.print);
+	i = 0;
+	while (i < v->num.n_philo)
+		pthread_detach(v->philos[i++].philo);
 	free(v->philos);
 	free(v->num.forks);
 }

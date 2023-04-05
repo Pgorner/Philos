@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 13:47:13 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/22 14:21:22 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/04/05 15:23:18 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	eating(t_p *p)
 {
 	pthread_mutex_lock(&p->num.forks[p->forklf]);
 	pthread_mutex_lock(&p->num.forks[p->forkrf]);
-	if (p->life == TRUE)
+	if (self_aware(p))
 	{
 		pthread_mutex_lock(&p->num.print);
 		printf("%lli %i %s\n", currentms(p), p->me, F);
@@ -26,27 +26,27 @@ void	eating(t_p *p)
 	}
 	pthread_mutex_lock(&p->eattime);
 	p->t_ate = currentms(p);
-	sleep_diff(p->num.t_eat);
 	p->n_ate++;
 	pthread_mutex_unlock(&p->eattime);
+	sleep_diff(p, p->num.t_eat);
 	pthread_mutex_unlock(&p->num.forks[p->forkrf]);
 	pthread_mutex_unlock(&p->num.forks[p->forklf]);
 }
 
 void	sleeping(t_p *p)
 {
-	if (p->life == TRUE)
+	if (self_aware(p))
 	{
 		pthread_mutex_lock(&p->num.print);
 		printf("%lli %i %s\n", currentms(p), p->me, S);
 		pthread_mutex_unlock(&p->num.print);
+		sleep_diff(p, p->num.t_sleep);
 	}
-	sleep_diff(p->num.t_sleep);
 }
 
 void	thinking(t_p *p)
 {
-	if (p->life == TRUE)
+	if (self_aware(p))
 	{
 		pthread_mutex_lock(&p->num.print);
 		printf("%lli %i %s\n", currentms(p), p->me, T);

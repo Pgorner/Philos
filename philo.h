@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 14:50:07 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/22 12:05:09 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/04/05 15:23:22 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_num
 	int				t_eat;
 	int				t_sleep;
 	int				n_eat;
+	int				life;
 	long long int	s_t;
 	pthread_mutex_t	print;
 	pthread_mutex_t	*forks;
@@ -57,6 +58,7 @@ typedef struct s_phil
 	int				forklf;
 	int				forkrf;
 	int				life;
+	int				death;
 	pthread_mutex_t	eattime;
 	pthread_t		philo;
 }	t_p;
@@ -98,6 +100,7 @@ int				main(int argc, char **argv);
 void			existence(void *args);
 void			infinity(void *args);
 void			join_philo(t_v *v);
+int				self_aware(t_p *p);
 //==============================================================================
 //----------------------------------TIME.c--------------------------------------
 //==============================================================================
@@ -111,6 +114,5 @@ void			values(int argc, char **argv, t_v *v);
 void			ft_exit(char *c, int exc);
 void			pzero(void *s, size_t n);
 int				check_args(char *str);
-void			sleep_diff(int time);
-
+void			sleep_diff(t_p *p, int time);
 #endif

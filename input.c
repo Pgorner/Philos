@@ -6,7 +6,7 @@
 /*   By: pgorner <pgorner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:28:00 by pgorner           #+#    #+#             */
-/*   Updated: 2023/03/22 14:26:40 by pgorner          ###   ########.fr       */
+/*   Updated: 2023/04/05 15:23:44 by pgorner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ int	check_args(char *str)
 
 void	set_v(t_p *p, t_v *v, int i)
 {
-	p->t_ate = 0;
+	p->t_ate = currentms(p);
 	p->me = i + 1;
 	p->num = v->num;
 	p->forkrf = i;
 	p->life = TRUE;
+	p->death = v->num.t_death;
 	pthread_mutex_init(&p->eattime, NULL);
 	if (i < v->num.n_philo - 1)
 		p->forklf = i + 1;
@@ -67,4 +68,5 @@ void	values(int argc, char **argv, t_v *v)
 	else
 		v->num.n_eat = -1;
 	v->num.s_t = ms();
+	v->num.life = TRUE;
 }
